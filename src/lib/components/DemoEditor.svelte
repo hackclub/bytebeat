@@ -29,12 +29,14 @@
 
 	function playPause() {
 		if (playing) return player.pause();
+		if (!player.allowed()) return;
 		const fn = tryCompile();
 		if (!fn) return;
 		player.play(SOURCE, fn, mine ? (player.t ?? 0) : 0);
 	}
 
 	function restart() {
+		if (!player.allowed()) return;
 		const fn = tryCompile();
 		if (fn) player.play(SOURCE, fn, 0);
 	}
@@ -67,9 +69,9 @@
 		{#if error}<span class="error" role="status">{error}</span>{/if}
 	</div>
 
-	<Scope formula={valid} />
-
 	<p class="volume">the examples are loud. lower your volume before pressing play.</p>
+
+	<Scope formula={valid} />
 </div>
 
 <style>
@@ -114,8 +116,9 @@
 		color: var(--orange);
 	}
 	.volume {
-		margin: 0.8rem 0 0;
-		font-size: 0.85rem;
-		color: var(--muted);
+		margin: 0 0 0.9rem;
+		font-size: 0.9rem;
+		font-weight: 600;
+		color: var(--text);
 	}
 </style>

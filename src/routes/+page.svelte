@@ -2,6 +2,7 @@
 	import { page } from '$app/state';
 	import { player } from '#lib/bytebeat.svelte.ts';
 	import DemoEditor from '#lib/components/DemoEditor.svelte';
+	import VolumeNotice from '#lib/components/VolumeNotice.svelte';
 
 	let { data } = $props();
 	const error = $derived(page.url.searchParams.get('error'));
@@ -38,6 +39,58 @@
 			title: 'combine',
 			code: 't*(t>>5|t>>8)',
 			text: 'two slow counters joined with | (bitwise or) change the pitch in a pattern that repeats, which you hear as a melody.'
+		}
+	];
+	const history = [
+		{
+			title: "2011: the first video",
+			img: "/images/history/viznut.jpg",
+			alt: "a bytebeat formula in pixel text from viznut's video",
+			text: "viznut's video that started it, with formulas sent in by other people.",
+			link: "watch on youtube",
+			href: "https://www.youtube.com/watch?v=GtQdIYUtAHg"
+		},
+		{
+			title: "no man's sky",
+			img: "/images/history/nms.jpg",
+			alt: "a player standing next to bytebeat devices on a red planet in no man's sky",
+			text: "hello games added a bytebeat device to the game in its beyond update (2019). players use it to make their own music, or have it generate random presets.",
+			link: "read the update",
+			href: "https://www.nomanssky.com/2019/12/beyond-development-update-5-bytebeat/"
+		},
+		{
+			title: "demoscene",
+			img: "/images/history/hellmood.jpg",
+			alt: "green symbols falling on a black screen",
+			text: "hellmood made a 16-byte ms-dos program that plays a bytebeat-style tune through the pc speaker.",
+			link: "read the article",
+			href: "https://gizmodo.com/this-matrix-inspired-program-only-needs-16-bytes-to-produce-a-chiptune-banger-2000762683"
+		},
+		{
+			title: "arduino",
+			img: "/images/history/arduino.jpg",
+			contain: true,
+			alt: "an arduino uno board",
+			text: "in october 2011, people on the arduino forum ported the formulas to arduino boards.",
+			link: "see the thread",
+			href: "https://forum.arduino.cc/t/one-line-algorithmic-music/73409"
+		},
+		{
+			title: "game boy",
+			img: "/images/history/gameboy.jpg",
+			contain: true,
+			alt: "an original game boy",
+			text: "there's a guide to building a game boy rom that plays bytebeat, using gbdk.",
+			link: "read the guide",
+			href: "https://moddingfridays.bleu255.com/Simple_Bytebeat_GB_ROM"
+		},
+		{
+			title: "synths",
+			img: "/images/history/bt110.jpg",
+			alt: "two dod circuits bt-110 synths on a desk",
+			text: "the dod circuits bt-110 is a portable synth built on bytebeat. eurorack modules like maneco labs' grone voice use it as an oscillator too.",
+			link: "read about the bt-110",
+			href: "https://synthanatomy.com/2024/04/dod-circuits-bt-110.html"
 		}
 	];
 </script>
@@ -148,54 +201,22 @@
 			<a href="https://arxiv.org/abs/1112.1368">a paper</a> about it.
 		</p>
 		<ul class="history">
-			<li>
-				<h3>demoscene</h3>
-				<p>
-					size-coding groups write very small programs that make sound. hellmood made a
-					<a
-						href="https://gizmodo.com/this-matrix-inspired-program-only-needs-16-bytes-to-produce-a-chiptune-banger-2000762683"
-						>16-byte ms-dos program</a
-					> that plays a bytebeat-style tune through the pc speaker.
-				</p>
-			</li>
-			<li>
-				<h3>arduino</h3>
-				<p>
-					in october 2011, people on the arduino forum
-					<a href="https://forum.arduino.cc/t/one-line-algorithmic-music/73409"
-						>ported the formulas</a
-					> to arduino boards.
-				</p>
-			</li>
-			<li>
-				<h3>game boy</h3>
-				<p>
-					there's a guide to
-					<a href="https://moddingfridays.bleu255.com/Simple_Bytebeat_GB_ROM"
-						>building a game boy rom that plays bytebeat</a
-					>, using gbdk.
-				</p>
-			</li>
-			<li>
-				<h3>synths</h3>
-				<p>
-					the <a href="https://synthanatomy.com/2024/04/dod-circuits-bt-110.html"
-						>dod circuits bt-110</a
-					>
-					is a portable synth built on bytebeat. eurorack modules such as maneco labs'
-					<a href="https://www.signalsounds.com/maneco-grone-voice-eurorack-bytebeat-oscillator-module"
-						>grone voice</a
-					> use it as an oscillator.
-				</p>
-			</li>
-			<li>
-				<h3>games</h3>
-				<p>
-					we couldn't find a big commercial game that uses it. it shows up in small indie and
-					game jam projects, like the ones
-					<a href="https://itch.io/misc/top-rated/tag-bytebeat">tagged bytebeat on itch.io</a>.
-				</p>
-			</li>
+			{#each history as item (item.title)}
+				<li>
+					<a href={item.href} class="shot">
+						<img
+							src={item.img}
+							alt={item.alt}
+							class:contain={item.contain}
+							loading="lazy"
+							width="640"
+							height="360"
+						/>
+					</a>
+					<h3>{item.title}</h3>
+					<p>{item.text} <a href={item.href}>{item.link}</a></p>
+				</li>
+			{/each}
 		</ul>
 		<p>
 			bytebeat sounds a lot like chiptune, the music from consoles like the nes and game boy, but
@@ -209,7 +230,10 @@
 		<h2>how it works</h2>
 		<ol class="plain">
 			<li>go through the basics above.</li>
-			<li>write a track in the bytebeat editor (coming soon). hackatime logs the time you spend.</li>
+			<li>
+				write a track in the bytebeat editor (coming soon). track your time with
+				<a href="https://lapse.hackclub.com">lapse</a>.
+			</li>
 			<li>ship the track to earn prizes. the prize list isn't out yet.</li>
 		</ol>
 	</section>
@@ -222,6 +246,8 @@
 		</p>
 	</section>
 </main>
+
+<VolumeNotice />
 
 <footer class="wrap">
 	<nav>
@@ -312,32 +338,40 @@
 	.history {
 		list-style: none;
 		padding: 0;
-		margin: 1.5rem 0;
-		max-width: 62ch;
+		margin: 1.5rem 0 0.75rem;
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+		gap: 1rem;
 	}
 	.history li {
-		display: grid;
-		grid-template-columns: 9rem 1fr;
-		gap: 1rem;
-		padding: 1rem 0;
-		border-top: 2px solid var(--line);
+		background: var(--navy-2);
+		border: 2px solid var(--line);
+		display: flex;
+		flex-direction: column;
 	}
-	.history li:last-child {
+	.shot {
+		display: block;
+		line-height: 0;
 		border-bottom: 2px solid var(--line);
 	}
+	.shot img {
+		width: 100%;
+		height: auto;
+		aspect-ratio: 16 / 9;
+		object-fit: cover;
+		background: #fff;
+	}
+	.shot img.contain {
+		object-fit: contain;
+	}
 	.history h3 {
-		font-size: 0.65rem;
+		font-size: 0.75rem;
 		color: var(--orange);
-		padding-top: 0.35rem;
+		margin: 1rem 1rem 0;
 	}
 	.history p {
-		margin: 0;
-	}
-	@media (max-width: 560px) {
-		.history li {
-			grid-template-columns: 1fr;
-			gap: 0.5rem;
-		}
+		margin: 0.6rem 1rem 1rem;
+		font-size: 0.95rem;
 	}
 
 	.notice {

@@ -12,9 +12,30 @@ export function compile(formula: string): Fn {
 	return fn;
 }
 
+const VOLUME_KEY = 'bytebeat:volume-ok';
+
 class Player {
 	source = $state<string | null>(null);
 	playing = $state(false);
+	volumeOk = $state(false);
+	showVolumeNotice = $state(false);
+
+	allowed(): boolean {
+		if (this.volumeOk) return true;
+		try {
+			if (localStorage.getItem(VOLUME_KEY)) return (this.volumeOk = true);
+		} catch {}
+		this.showVolumeNotice = true;
+		return false;
+	}
+
+	dismissVolumeNotice() {
+		this.volumeOk = true;
+		this.showVolumeNotice = false;
+		try {
+			localStorage.setItem(VOLUME_KEY, '1');
+		} catch {}
+	}
 
 	#ctx: AudioContext | null = null;
 	#node: AudioBufferSourceNode | null = null;
@@ -64,7 +85,7 @@ class Player {
 
 	toggle(source: string, formula: string) {
 		if (this.playing && this.source === source) this.stop();
-		else this.play(source, compile(formula));
+		else if (this.allowed()) this.play(source, compile(formula));
 	}
 
 	get t(): number | null {

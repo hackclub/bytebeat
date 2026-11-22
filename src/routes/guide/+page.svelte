@@ -3,6 +3,8 @@
 	import { GuidePlayer } from '#lib/bytebeat/guide.svelte.ts';
 	import Example from '#lib/components/Example.svelte';
 	import VolumeNotice from '#lib/components/VolumeNotice.svelte';
+	import SiteHeader from '#lib/components/layout/SiteHeader.svelte';
+	import SiteFooter from '#lib/components/layout/SiteFooter.svelte';
 
 	const gp = new GuidePlayer();
 	onDestroy(() => gp.destroy());
@@ -72,10 +74,9 @@ chord = (t * root >> 3 & 31) + (t * root * 5 >> 5 & 31) + (t * root * 3 >> 4 & 3
 	<meta name="description" content="learn how bytebeat works and make your first song." />
 </svelte:head>
 
-<header class="wrap bar">
-	<a href="/" class="flag"><img src="/flag-8bit.svg" alt="bytebeat home" width="96" height="34" /></a>
+<SiteHeader>
 	<a href="/editor" class="btn ghost">editor</a>
-</header>
+</SiteHeader>
 
 <div class="wrap layout">
 <nav class="side" aria-label="sections">
@@ -95,10 +96,17 @@ chord = (t * root >> 3 & 31) + (t * root * 5 >> 5 & 31) + (t * root * 3 >> 4 & 3
 	<section class="intro">
 		<h1>the guide<sup class="tm">™</sup></h1>
 		<p>
-			this guide will explain how bytebeat works and walk you through making a short song! 
-			each of these sections will be trying to explain a different concept to you, and
-			by the end you'll have a track with drums, a melody and chords. it should
-			only take about an hour.
+			bytebeat started in september 2011, when a programmer viznut posted a video called
+			"experimental music from very short c programs" and wrote about it in a blog post,
+			<a href="http://countercomplex.blogspot.com/2011/10/algorithmic-symphonies-from-one-line-of.html" target="_blank">algorithmic symphonies from one line of code</a>.
+			the idea was that a single line of code, run 8000 times a second, could make actual music.
+			people online started sharing their own one-liners, and that's how bytebeat became a thing.
+		</p>
+		<p>
+			this guide will explain how bytebeat works one concept at a time, and walk you through
+			making a short song with drums, a melody and chords! this guide should
+			only take about an hour. if you don't understand anything, try searching it up,
+			or ask someone in the <a href="https://hackclub.com/slack" target="_blank">Hack Club Slack</a> for help.
 		</p>
 		<p>
 			you'll be able to play and edit every example in the guide! these orange boxes are small
@@ -118,7 +126,7 @@ chord = (t * root >> 3 & 31) + (t * root * 5 >> 5 & 31) + (t * root * 3 >> 4 & 3
 	<section id="sound">
 		<h2><span>01</span> sound</h2>
 		<p>
-			to play sounds, a speaker moves back and forth, where digital audio tells it how to move through
+			to play sounds, a speaker moves back and forth, and  digital audio tells it how to move through
 			list of numbers called samples.
 		</p>
 		<p>
@@ -131,7 +139,7 @@ chord = (t * root >> 3 & 31) + (t * root * 5 >> 5 & 31) + (t * root * 3 >> 4 & 3
 		<p>
 			computers store numbers as <b>bits</b>, which are just 0s and 1s. 8 bits together make a
 			<b>byte</b>, and a byte can only hold the numbers 0 to 255. bytebeat keeps just one byte of
-			your answer (that's where the name comes from), so anything past 255 wraps back around to 0,
+			your answer (hence the name), so anything past 255 wraps back around to 0,
 			like a clock going from 12 back to 1.
 		</p>
 		<p>
@@ -160,12 +168,12 @@ chord = (t * root >> 3 & 31) + (t * root * 5 >> 5 & 31) + (t * root * 3 >> 4 & 3
 			</figcaption>
 		</figure>
 		<p>
-			this type of shape is called a <b>sawtooth wave</b>, because it looks like the teeth of a saw. you
-			hear it as a low buzz.
+			this type of shape is called a <b>sawtooth wave</b>, because it looks like the teeth of a saw. you just
+			heard it as a low buzz.
 		</p>
 		<p>
-			one climb takes 256 samples, so it happens 8000 / 256 = 31.25 times a second. that's the
-			frequency of the note, measured in hertz (hz).
+			one climb takes 256 samples, so it happens 8000 / 256 = 31.25 times a second.
+			this means that the frequency of the note, measured in hertz (hz), is 31.25.
 		</p>
 		<p>
 			go to the <a href="/editor" target="_blank">editor</a> and see how <code>t</code> sounds.
@@ -180,29 +188,29 @@ chord = (t * root >> 3 & 31) + (t * root * 5 >> 5 & 31) + (t * root * 3 >> 4 & 3
 		</p>
 		<p>
 			to raise the pitch, make the wave repeat faster. <code>t * 2</code> climbs twice as fast as
-			<code>t</code>, so it wraps around twice as often:
+			<code>t</code>, so it wraps around twice as often and wil play a higher note:
 		</p>
 		<p class="eq">
 			8000 samples a second × 2 ÷ 256 = <b>62.5 hz</b> ≈ the note <b>B1</b>
 		</p>
 		<Example {gp} id="pitch-2" code="t * 2" />
 		<p>
-			the frequency is 31.25 hz times the number. each time you double the number, the note goes
-			up one octave. change the 2 above to 4, then 8, then 16 while it plays.
+			as the frequency is 31.25 hz times the number, every time you double the number, the note will go
+			up one octave. try changing the 2 to a 4, then 8, then 16 while it plays.
 		</p>
 		<p>
-			numbers in between give the notes in between. <code>t * 3</code> is a fifth above
-			<code>t * 2</code>, the same jump as the second "twinkle" in "twinkle twinkle little star".
+			values in between will accordingly give notes that are higgher. <code>t * 3</code> plays a fifth above
+			<code>t * 2</code>.
 		</p>
 		<p>
-			the sawtooth is one shape. <code>&amp; 128</code> keeps a single bit of the result, so the
-			output jumps between 0 and 128 with nothing in between. that's a square wave: the same note
-			with a hollower sound, like an old game console.
+			the sawtooth is one example waveform. the short sequence <code>&amp; 128</code> keeps a single bit of the result, so the
+			output jumps between 0 and 128 with nothing in between. this is what's called a square wave, when a note
+			is kept with only hollower sound, like an old game console.
 		</p>
 		<Example {gp} id="pitch-square" code="t * 4 & 128" />
 		<p>
-			<code>*</code> runs before <code>&amp;</code>, so <code>t * 4 &amp; 128</code> means
-			<code>(t * 4) &amp; 128</code>. <code>&amp; 64</code> makes a smaller jump, so it's quieter.
+			your code will run left to right, so <code>*</code> runs before <code>&amp;</code>, and <code>t * 4 &amp; 128</code> means
+			<code>(t * 4) &amp; 128</code>. <code>&amp; 64</code> which will make a smaller jump, so it's quieter.
 			you'll need that later, when several sounds play at once.
 		</p>
 		<p>
@@ -215,10 +223,10 @@ chord = (t * root >> 3 & 31) + (t * root * 5 >> 5 & 31) + (t * root * 3 >> 4 & 3
 	<section id="rhythm">
 		<h2><span>03</span> rhythm</h2>
 		<p>
-			rhythm needs something that changes much slower than the sound. <code>&gt;&gt;</code> shifts
+			rhythm needs something that changes much slower than the sound. <code>&gt;&gt;</code> wil shift
 			the bits of a number to the right, which divides by a power of two and drops the
 			remainder. <code>t &gt;&gt; 11</code> is <code>t</code> divided by 2048, so it goes up by one
-			every 2048 samples, about a quarter of a second. that's a beat counter.
+			every 2048 samples(which is about a quarter of a second). that's what's called a beat counter.
 		</p>
 		<p>
 			<code>&amp; 1</code> keeps the lowest bit, so <code>t &gt;&gt; 11 &amp; 1</code> goes 0, 1, 0,
@@ -246,7 +254,7 @@ chord = (t * root >> 3 & 31) + (t * root * 5 >> 5 & 31) + (t * root * 3 >> 4 & 3
 			above with <code>;</code>.
 		</p>
 		<p>
-			drums don't stay on. they hit and fade out. <code>~t</code> flips every bit of
+			since drums don't always need to be on, they'll hit once and fade out. <code>~t</code> flips every bit of
 			<code>t</code>, so <code>~t &gt;&gt; 4 &amp; 127</code> counts down from 127 to 0, once
 			per beat. multiply by it and each beat starts loud and fades:
 		</p>
@@ -260,15 +268,14 @@ chord = (t * root >> 3 & 31) + (t * root * 5 >> 5 & 31) + (t * root * 3 >> 4 & 3
 			hiss. adding two sounds together plays both. replace your project with this:
 		</p>
 		<Example {gp} id="p-rhythm" code={p.rhythm} project="step 3" />
-		<p class="muted">
-			your square wave from step 2 comes back in the next step.
-		</p>
 	</section>
 
 	<section id="melody">
 		<h2><span>04</span> melody</h2>
 		<p>
-			a melody is a list of notes that changes over time. put the numbers in an array and use a
+			a melody is a list of notes that changes over time. put the numbers in an
+			<!-- links to mdn for anyone who hasn't seen an array before -->
+			<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" target="_blank">array</a> and use a
 			counter to pick one:
 		</p>
 		<Example {gp} id="melody-array" code="t * [4, 5, 6, 8][t >> 12 & 3] & 128" />
@@ -350,7 +357,6 @@ chord = (t * root >> 3 & 31) + (t * root * 5 >> 5 & 31) + (t * root * 3 >> 4 & 3
 			and saving updates the same link. if you open someone else's link, export makes your own
 			copy.
 		</p>
-		<p><kbd>ctrl</kbd>+<kbd>enter</kbd> plays and pauses, in the editor and on this page.</p>
 		<h3>if something sounds wrong</h3>
 		<ul class="plain">
 			<li>
@@ -370,6 +376,11 @@ chord = (t * root >> 3 & 31) + (t * root * 5 >> 5 & 31) + (t * root * 3 >> 4 & 3
 				−1 to 1. this guide uses classic mode (0 to 255).
 			</li>
 		</ul>
+		<!-- points people to /references once they've finished the guide -->
+		<p>
+			for a cheat sheet of operators, timings and more examples, check the
+			<a href="/references">references</a>.
+		</p>
 		<p><a href="/editor" class="btn">open the editor</a></p>
 	</section>
 </main>
@@ -377,34 +388,9 @@ chord = (t * root >> 3 & 31) + (t * root * 5 >> 5 & 31) + (t * root * 3 >> 4 & 3
 
 <VolumeNotice />
 
-<footer class="wrap">
-	<nav>
-		<a href="/">home</a>
-		<a href="https://hackclub.com">hack club</a>
-		<a href="https://hackclub.com/privacy-and-terms">privacy &amp; terms</a>
-	</nav>
-	<span class="muted">made by Hack Clubbers for Hack Clubbers!</span>
-</footer>
+<SiteFooter />
 
 <style>
-	.bar {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		gap: 1rem;
-		padding-top: 1rem;
-		padding-bottom: 1rem;
-		border-bottom: 2px solid var(--line);
-	}
-	.flag {
-		display: block;
-		line-height: 0;
-	}
-	.flag img {
-		width: 144px;
-		height: auto;
-		image-rendering: pixelated;
-	}
 
 	.layout {
 		max-width: 1120px;
@@ -442,14 +428,14 @@ chord = (t * root >> 3 & 31) + (t * root * 5 >> 5 & 31) + (t * root * 3 >> 4 & 3
 		margin-left: 0.2em;
 	}
 	h2 {
-		font-size: 1rem;
-		margin-bottom: 1.2rem;
+		font-size: 1.4rem;
+		margin-bottom: 1.4rem;
 		display: flex;
 		align-items: baseline;
-		gap: 0.8rem;
+		gap: 0.9rem;
 	}
 	h2 span {
-		font-size: 0.65rem;
+		font-size: 0.9rem;
 		color: var(--muted);
 	}
 	h3 {
@@ -566,22 +552,5 @@ chord = (t * root >> 3 & 31) + (t * root * 5 >> 5 & 31) + (t * root * 3 >> 4 & 3
 	}
 	.plain li::marker {
 		color: var(--orange);
-	}
-
-	footer {
-		margin-top: 4rem;
-		padding-top: 1.5rem;
-		padding-bottom: 2rem;
-		border-top: 2px solid var(--line);
-		display: flex;
-		justify-content: space-between;
-		gap: 1rem;
-		flex-wrap: wrap;
-		font-size: 0.85rem;
-	}
-	footer nav {
-		display: flex;
-		gap: 1.5rem;
-		flex-wrap: wrap;
 	}
 </style>

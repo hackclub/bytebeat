@@ -59,7 +59,6 @@
 </script>
 
 <div class="ex" class:project class:active>
-	{#if project}<p class="label">your project · {project}</p>{/if}
 	<div class="row" class:titled={title}>
 		{#if title}<p class="title">{title}</p>{/if}
 		<button class="btn" onclick={() => gp.toggle(id, code)}>{playing ? '❚❚ pause' : '▶ play'}</button>
@@ -104,12 +103,6 @@
 	}
 	.ex.project {
 		border-color: var(--orange);
-	}
-	.label {
-		margin: 0;
-		font-family: var(--pixel);
-		font-size: 0.6rem;
-		color: var(--orange);
 	}
 	.row {
 		display: flex;

@@ -3,6 +3,8 @@
 	import { player } from '#lib/bytebeat.svelte.ts';
 	import DemoEditor from '#lib/components/DemoEditor.svelte';
 	import VolumeNotice from '#lib/components/VolumeNotice.svelte';
+	import SiteHeader from '#lib/components/layout/SiteHeader.svelte';
+	import SiteFooter from '#lib/components/layout/SiteFooter.svelte';
 
 	let { data } = $props();
 	const error = $derived(page.url.searchParams.get('error'));
@@ -100,10 +102,7 @@
 	<meta name="description" content="make music from one line of code. a hack club ysws." />
 </svelte:head>
 
-<header class="wrap bar">
-	<a href="https://hackclub.com" class="flag">
-		<img src="/flag-8bit.svg" alt="Hack Club" width="96" height="34" />
-	</a>
+<SiteHeader flagHref="https://hackclub.com" flagAlt="Hack Club" big>
 	{#if data.user}
 		<form method="POST" action="/auth/logout" class="who">
 			{#if data.user.avatar}<img src={data.user.avatar} alt="" width="24" height="24" />{/if}
@@ -113,7 +112,7 @@
 	{:else}
 		<a href="/auth/login" class="btn ghost">log in</a>
 	{/if}
-</header>
+</SiteHeader>
 
 <main>
 	<section class="wrap hero">
@@ -253,34 +252,15 @@
 
 <VolumeNotice />
 
-<footer class="wrap">
-	<nav>
-		<a href="https://hackclub.com">hack club</a>
-		<a href="https://forms.hackclub.com/bounty">fulfillment bounty</a>
-		<a href="https://hackclub.com/privacy-and-terms">privacy &amp; terms</a>
-	</nav>
-	<span class="muted">made by Hack Clubbers for Hack Clubbers!</span>
-</footer>
+<SiteFooter
+	links={[
+		{ href: 'https://hackclub.com', label: 'hack club' },
+		{ href: 'https://forms.hackclub.com/bounty', label: 'fulfillment bounty' },
+		{ href: 'https://hackclub.com/privacy-and-terms', label: 'privacy & terms' }
+	]}
+/>
 
 <style>
-	.bar {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		gap: 1rem;
-		padding-top: 1rem;
-		padding-bottom: 1rem;
-		border-bottom: 2px solid var(--line);
-	}
-	.flag {
-		display: block;
-		line-height: 0;
-	}
-	.flag img {
-		width: 192px;
-		height: auto;
-		image-rendering: pixelated;
-	}
 	.who {
 		display: flex;
 		align-items: center;
@@ -457,22 +437,5 @@
 		color: var(--orange);
 		font-family: var(--pixel);
 		font-size: 0.7rem;
-	}
-
-	footer {
-		margin-top: 4rem;
-		padding-top: 1.5rem;
-		padding-bottom: 2rem;
-		border-top: 2px solid var(--line);
-		display: flex;
-		justify-content: space-between;
-		gap: 1rem;
-		flex-wrap: wrap;
-		font-size: 0.85rem;
-	}
-	footer nav {
-		display: flex;
-		gap: 1.5rem;
-		flex-wrap: wrap;
 	}
 </style>

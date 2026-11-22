@@ -31,6 +31,7 @@
 		"vite": "^8.3.0"
 	},
 	"dependencies": {
+		"acorn": "^8.19.0",
 		"drizzle-orm": "^0.45.4",
 		"postgres": "^4.1.1"
 	}

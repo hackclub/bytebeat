@@ -21,11 +21,31 @@ export const init: ServerInit = async () => {
 	if (env.TOKEN_ENCRYPTION_KEY && !/^[0-9a-f]{64}$/i.test(env.TOKEN_ENCRYPTION_KEY))
 		throw new Error('TOKEN_ENCRYPTION_KEY must be 64 hex chars (openssl rand -hex 32)');
 
-	if (env.DATABASE_URL) await migrate(db, { migrationsFolder: 'drizzle' });
+	await ensureMigrated();
 };
 
+let migrated: Promise<boolean> | null = null;
+function ensureMigrated() {
+	if (!env.DATABASE_URL) return Promise.resolve(false);
+	migrated ??= migrate(db, { migrationsFolder: 'drizzle' }).then(
+		() => true,
+		(err) => {
+			console.error('database not reachable, will retry on next request:', err.cause ?? err);
+			migrated = null;
+			return false;
+		}
+	);
+	return migrated;
+}
+
 export const handle: Handle = async ({ event, resolve }) => {
-	const token = event.cookies.get(SESSION_COOKIE);
-	event.locals.user = env.DATABASE_URL ? await userFromSession(token) : null;
+	event.locals.user = null;
+	if (await ensureMigrated()) {
+		try {
+			event.locals.user = await userFromSession(event.cookies.get(SESSION_COOKIE));
+		} catch (err) {
+			console.error('could not load session:', err);
+		}
+	}
 	return resolve(event);
 };

@@ -26,4 +26,18 @@ export const sessions = pgTable('sessions', {
 	createdAt: timestamp('created_at').notNull().defaultNow()
 });
 
+export const projects = pgTable('projects', {
+	id: text('id').primaryKey(),
+	userId: integer('user_id')
+		.notNull()
+		.references(() => users.id, { onDelete: 'cascade' }),
+	title: text('title').notNull().default('untitled'),
+	code: text('code').notNull(),
+	mode: text('mode').notNull().default('bytebeat'),
+	sampleRate: integer('sample_rate').notNull().default(8000),
+	createdAt: timestamp('created_at').notNull().defaultNow(),
+	updatedAt: timestamp('updated_at').notNull().defaultNow()
+});
+
 export type User = typeof users.$inferSelect;
+export type Project = typeof projects.$inferSelect;

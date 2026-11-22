@@ -16,6 +16,12 @@ const SESSION_DAYS = 7;
 
 export const SESSION_COOKIE = 'session';
 export const STATE_COOKIE = 'oauth_state';
+export const NEXT_COOKIE = 'post_login_redirect';
+
+export function safeNext(raw: string | null | undefined): string {
+	if (!raw || !raw.startsWith('/') || raw.startsWith('//') || raw.includes('\\')) return '/';
+	return raw;
+}
 
 const hash = (token: string) => createHash('sha256').update(token).digest('hex');
 export const cookieOpts = { path: '/', httpOnly: true, sameSite: 'lax', secure: !dev } as const;

@@ -158,6 +158,10 @@
 		<h2>try it</h2>
 		<p class="muted">edit the formula and press play. changes apply while it plays.</p>
 		<DemoEditor initial={HERO} />
+		<p class="ctas">
+			<a href="/editor" class="btn">open the full editor</a>
+			<a href="/guide" class="btn ghost">read the guide</a>
+		</p>
 	</section>
 
 	<section class="wrap">
@@ -229,9 +233,9 @@
 	<section class="wrap">
 		<h2>how it works</h2>
 		<ol class="plain">
-			<li>go through the basics above.</li>
+			<li>go through the <a href="/guide">guide</a> and make your first song.</li>
 			<li>
-				write a track in the bytebeat editor (coming soon). track your time with
+				write a track in the <a href="/editor">bytebeat editor</a>. track your time with
 				<a href="https://lapse.hackclub.com">lapse</a>.
 			</li>
 			<li>ship the track to earn prizes. the prize list isn't out yet.</li>
@@ -320,6 +324,11 @@
 	}
 	.muted {
 		color: var(--muted);
+	}
+	.ctas {
+		display: flex;
+		gap: 0.8rem;
+		flex-wrap: wrap;
 	}
 
 	.hero {

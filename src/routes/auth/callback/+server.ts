@@ -1,7 +1,9 @@
 import { redirect } from '@sveltejs/kit';
 import {
+	NEXT_COOKIE,
 	STATE_COOKIE,
 	createSession,
+	safeNext,
 	exchangeCode,
 	fetchIdentity,
 	upsertUser
@@ -10,6 +12,8 @@ import {
 export const GET = async ({ url, cookies }) => {
 	const expected = cookies.get(STATE_COOKIE);
 	cookies.delete(STATE_COOKIE, { path: '/' });
+	const next = safeNext(cookies.get(NEXT_COOKIE));
+	cookies.delete(NEXT_COOKIE, { path: '/' });
 
 	const code = url.searchParams.get('code');
 	const state = url.searchParams.get('state');
@@ -21,5 +25,5 @@ export const GET = async ({ url, cookies }) => {
 
 	const user = await upsertUser(identity);
 	await createSession(cookies, user.id);
-	redirect(302, '/');
+	redirect(302, next);
 };

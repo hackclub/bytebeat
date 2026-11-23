@@ -24,7 +24,7 @@
 		{
 			target: 'volume',
 			title: 'volume',
-			body: 'bytebeat is loud. start low and turn it up.'
+			body: 'bytebeat is REALLY loud!! start low and turn it up.'
 		},
 		{
 			target: 'time',

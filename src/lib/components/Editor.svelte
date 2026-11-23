@@ -26,15 +26,10 @@
 
 	// svelte-ignore state_referenced_locally
 	let id = $state(project?.id ?? null);
-	// svelte-ignore state_referenced_locally
 	let isOwner = $state(project?.isOwner ?? false);
-	// svelte-ignore state_referenced_locally
 	let title = $state(project?.title ?? 'untitled');
-	// svelte-ignore state_referenced_locally
 	let code = $state(project?.code ?? STARTER);
-	// svelte-ignore state_referenced_locally
 	let mode = $state<Mode>((project?.mode as Mode) ?? 'bytebeat');
-	// svelte-ignore state_referenced_locally
 	let rate = $state(project?.sampleRate ?? 8000);
 
 	let dirty = $state(false);
@@ -237,11 +232,10 @@
 				{:else if engine.runtimeError}
 					<p class="error" role="status">{engine.runtimeError}</p>
 				{/if}
-			</div>
-			<p class="volume-note">the examples are loud. lower your volume before pressing play.</p>
+			</div>the examples are loud. lower your volume before pressing play.
 			<p class="help">
 				learn how to use this in the <a href="/guide">guide</a>, or
-				<button class="link-btn" onclick={() => tour?.start()}>replay the tour</button>.
+				<button class="link-btn" onclick={() => tour?.start()}>restart the tutorial</button>.
 			</p>
 		</aside>
 	</div>
@@ -387,11 +381,6 @@
 		color: var(--orange);
 		text-decoration: underline;
 		cursor: pointer;
-	}
-	.volume-note {
-		margin: 0;
-		font-size: 0.85rem;
-		font-weight: 600;
 	}
 	.help {
 		margin: 0;

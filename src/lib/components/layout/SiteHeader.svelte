@@ -1,8 +1,6 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 
-	// top bar shared by the home, guide and references pages.
-	// the flag sits on the left; whatever you pass as children goes on the right.
 	let {
 		flagHref = '/',
 		flagAlt = 'bytebeat home',

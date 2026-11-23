@@ -105,8 +105,10 @@
 <SiteHeader flagHref="https://hackclub.com" flagAlt="Hack Club" big>
 	{#if data.user}
 		<form method="POST" action="/auth/logout" class="who">
-			{#if data.user.avatar}<img src={data.user.avatar} alt="" width="24" height="24" />{/if}
-			<span>{data.user.username ?? data.user.firstName}</span>
+			<a href="/account" class="me">
+				{#if data.user.avatar}<img src={data.user.avatar} alt="" width="24" height="24" />{/if}
+				<span>{data.user.username ?? data.user.firstName}</span>
+			</a>
 			<button class="link">log out</button>
 		</form>
 	{:else}
@@ -267,6 +269,16 @@
 		gap: 0.6rem;
 		margin: 0;
 		font-size: 0.9rem;
+	}
+	.me {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		color: inherit;
+		text-decoration: none;
+	}
+	.me:hover span {
+		color: var(--orange);
 	}
 	.who img {
 		image-rendering: pixelated;

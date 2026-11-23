@@ -39,7 +39,7 @@
 
 	function reset() {
 		code = initial;
-		gp.update(id, code);
+		gp.update(id, code);	
 	}
 
 	function onKey(e: KeyboardEvent) {

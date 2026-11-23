@@ -95,7 +95,7 @@
 	<section class="wrap hero">
 		<h1>bytebeat</h1>
 		<p class="lede">
-			bytebeat is music written as one line of code. ship a track to earn music gear from
+			bytebeat is music written as one line of code. ship a track to earn some tasty bites from
 			<a href="https://hackclub.com">hack club</a>.
 		</p>
 		<p class="ctas">
@@ -126,21 +126,19 @@
 					</form>
 				</div>
 			{/if}
-		{:else}
-			<a href="/auth/login" class="btn">log in with hack club</a>
 		{/if}
 	</section>
 
-	<section class="wrap intro">
+	<section class="wrap split">
 		<div>
-			<h2>what is bytebeat?</h2>
+			<h2>what even is bytebeat???</h2>
 			<p>
-				digital audio is a list of numbers that tells the speaker where to move, usually thousands
-				per second. in bytebeat you write a formula that makes that list. the player counts
+				digital audio is actually just a list of numbers that tells the speaker where to move, usually thousands
+				per second. in bytebeat, you'll write a formula that makes that list. the music player will count
 				<code>t</code> up from 0, 8,000 times a second, and runs your formula each time. the result
-				is cut down to a number from 0 to 255, and that number is the next sample.
+				is cut down to a number from 0 to 255 which is played through your speakers.
 			</p>
-			<p>it runs in the browser, so there's nothing to install.</p>
+			<p>you'll be able to make these run in-browser, so there's nothing to install.</p>
 		</div>
 		<div>
 			<h2>here's a demo track!</h2>
@@ -150,7 +148,7 @@
 
 	<section class="wrap">
 		<h2>the basics</h2>
-		<p class="muted">each step adds one idea to the step before it. press play to hear it.</p>
+		<p class="muted">these are each of the steps this guides teaches. press play to see how they sound like.</p>
 		<ol class="steps">
 			{#each steps as step, i (step.title)}
 				<li class:on={player.playing && player.source === step.title}>
@@ -170,13 +168,22 @@
 
 	<section class="wrap">
 		<h2>where it's been used</h2>
-		<p>
-			bytebeat started in september 2011, when viznut posted a video called "experimental music
-			from very short c programs" and wrote about it on his blog,
-			<a href="http://countercomplex.blogspot.com">countercomplex</a>. people started sharing their
-			own formulas, and the name "bytebeat" came out of that. later that year he wrote
-			<a href="https://arxiv.org/abs/1112.1368">a paper</a> about it.
-		</p>
+		<div class="split">
+			<p>
+				bytebeat started in september 2011, when viznut posted a video called "experimental music
+				from very short c programs" and wrote about it on his blog,
+				<a href="http://countercomplex.blogspot.com">countercomplex</a>. people started sharing their
+				own formulas, and the name "bytebeat" came out of that. later that year he wrote
+				<a href="https://arxiv.org/abs/1112.1368">a paper</a> about it.
+			</p>
+			<p>
+				while bytebeat sounds a lot like chiptune (the music from consoles like the nes and game boy),
+				it actually works differently. those consoles have sound chips with a few fixed channels (pulse
+				waves, noise and so on), and the game tells each channel which note to play. bytebeat instead	
+				calculates every sample itself, so one formula is the whole sound.
+			</p>
+		</div>
+		<p>here's some examples of people using bytebeat:</p>
 		<ul class="history">
 			{#each history as item (item.title)}
 				<li>
@@ -195,12 +202,6 @@
 				</li>
 			{/each}
 		</ul>
-		<p>
-			bytebeat sounds a lot like chiptune, the music from consoles like the nes and game boy, but
-			it works differently. those consoles have sound chips with a few fixed channels (pulse
-			waves, noise and so on), and the game tells each channel which note to play. bytebeat
-			calculates every sample itself, so one formula is the whole sound.
-		</p>
 	</section>
 
 	<section class="wrap">
@@ -291,7 +292,7 @@
 		padding-top: 3.5rem;
 	}
 
-	.intro {
+	.split {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 		gap: 2.5rem;

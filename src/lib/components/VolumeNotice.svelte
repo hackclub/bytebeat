@@ -18,7 +18,7 @@
 	}}
 >
 	<h2 id="volume-title">turn your volume down</h2>
-	<p><strong>the examples are loud. lower your volume before pressing play.</strong></p>
+	<p><strong>make sure to lower your sound! this is REALLY loud.</strong></p>
 	<button class="btn" onclick={() => player.dismissVolumeNotice()}>got it</button>
 </dialog>
 

@@ -69,7 +69,7 @@
 		{#if error}<span class="error" role="status">{error}</span>{/if}
 	</div>
 
-	<p class="volume">the examples are loud. lower your volume before pressing play.</p>
+	<p class="volume">make sure to lower your sound! this is REALLY loud.</p>
 
 	<Scope formula={valid} />
 </div>

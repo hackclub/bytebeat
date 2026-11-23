@@ -52,7 +52,16 @@ async function api<T>(token: string, path: string): Promise<T | null> {
 	return res.ok ? ((await res.json()) as T) : null;
 }
 
-export type HackatimeMe = { id: number; emails: string[]; slack_id: string | null };
+export const FRAUD_URL = 'https://fraud.hackclub.com';
+
+export type HackatimeMe = {
+	id: number;
+	emails: string[];
+	slack_id: string | null;
+	trust_factor?: { trust_level: string; trust_value: number };
+};
+
+export const isHackatimeBanned = (me: HackatimeMe) => me.trust_factor?.trust_level === 'red';
 export type HackatimeProject = {
 	name: string;
 	total_seconds: number;
@@ -89,6 +98,13 @@ export async function unlinkHackatime(user: User) {
 }
 
 const tokenOf = (user: User) => (user.hackatimeToken ? decrypt(user.hackatimeToken) : null);
+
+export async function linkedHackatimeBanned(user: User) {
+	const token = tokenOf(user);
+	if (!token) return false;
+	const me = await fetchHackatimeMe(token);
+	return !!me && isHackatimeBanned(me);
+}
 
 export async function hackatimeSeconds(user: User, startDate?: string, endDate?: string) {
 	const token = tokenOf(user);

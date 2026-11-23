@@ -5,6 +5,8 @@
 	import VolumeNotice from '#lib/components/VolumeNotice.svelte';
 	import SiteHeader from '#lib/components/layout/SiteHeader.svelte';
 	import SiteFooter from '#lib/components/layout/SiteFooter.svelte';
+	import TrackPicker from '#lib/components/TrackPicker.svelte';
+	import { track } from '#lib/track.svelte.ts';
 
 	const gp = new GuidePlayer();
 	onDestroy(() => gp.destroy());
@@ -65,7 +67,8 @@ chord = (t * root >> 3 & 31) + (t * root * 5 >> 5 & 31) + (t * root * 3 >> 4 & 3
 		['melody', 'melody'],
 		['chords', 'chords'],
 		['combine', 'combine'],
-		['share', 'save and share']
+		['share', 'save and share'],
+		['submit', 'submit']
 	];
 </script>
 
@@ -113,6 +116,14 @@ chord = (t * root >> 3 & 31) + (t * root * 5 >> 5 & 31) + (t * root * 3 >> 4 & 3
 			snippets of code; make sure you're continuing to make your own version with the
 			<a href="/editor" target="_blank">editor</a> as you go along the guide.
 		</p>
+		<TrackPicker question="are you doing this on your own or with your club?" />
+		{#if track.value === 'individual'}
+			<p class="callout">
+				since you're doing this on your own, you have to record your time with
+				<a href="https://lapse.hackclub.com" target="_blank" rel="noopener">lapse</a>. start a
+				recording before you open the editor, and keep it running while you work on your song.
+			</p>
+		{/if}
 		<Example
 			{gp}
 			id="preview"
@@ -383,6 +394,18 @@ chord = (t * root >> 3 & 31) + (t * root * 5 >> 5 & 31) + (t * root * 3 >> 4 & 3
 		</p>
 		<p><a href="/editor" class="btn">open the editor</a></p>
 	</section>
+
+	<section id="submit">
+		<h2><span>08</span> submit</h2>
+		<p>finished your song and exported it? you're ready to submit!</p>
+		{#if track.value === 'individual'}
+			<p class="callout">
+				make sure your <a href="https://lapse.hackclub.com" target="_blank" rel="noopener">lapse</a>
+				recording covers the time you spent on it.
+			</p>
+		{/if}
+		<p><a href="/submit" class="btn">ready to submit? click here</a></p>
+	</section>
 </main>
 </div>
 
@@ -412,6 +435,11 @@ chord = (t * root >> 3 & 31) + (t * root * 5 >> 5 & 31) + (t * root * 3 >> 4 & 3
 	section {
 		padding-top: 3.5rem;
 		scroll-margin-top: 1rem;
+	}
+	.callout {
+		padding: 0.6rem 0.9rem;
+		border-left: 2px solid var(--orange);
+		background: var(--navy-2);
 	}
 	.intro {
 		padding-top: 3rem;

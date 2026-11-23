@@ -232,7 +232,7 @@
 				{:else if engine.runtimeError}
 					<p class="error" role="status">{engine.runtimeError}</p>
 				{/if}
-			</div>the examples are loud. lower your volume before pressing play.
+			</div>make sure to lower your sound! this is REALLY loud.
 			<p class="help">
 				learn how to use this in the <a href="/guide">guide</a>, or
 				<button class="link-btn" onclick={() => tour?.start()}>restart the tutorial</button>.

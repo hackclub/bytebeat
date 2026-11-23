@@ -61,14 +61,6 @@
 			href: "https://www.nomanssky.com/2019/12/beyond-development-update-5-bytebeat/"
 		},
 		{
-			title: "demoscene",
-			img: "/images/history/hellmood.jpg",
-			alt: "green symbols falling on a black screen",
-			text: "hellmood made a 16-byte ms-dos program that plays a bytebeat-style tune through the pc speaker.",
-			link: "read the article",
-			href: "https://gizmodo.com/this-matrix-inspired-program-only-needs-16-bytes-to-produce-a-chiptune-banger-2000762683"
-		},
-		{
 			title: "arduino",
 			img: "/images/history/arduino.jpg",
 			contain: true,
@@ -76,23 +68,6 @@
 			text: "in october 2011, people on the arduino forum ported the formulas to arduino boards.",
 			link: "see the thread",
 			href: "https://forum.arduino.cc/t/one-line-algorithmic-music/73409"
-		},
-		{
-			title: "game boy",
-			img: "/images/history/gameboy.jpg",
-			contain: true,
-			alt: "an original game boy",
-			text: "there's a guide to building a game boy rom that plays bytebeat, using gbdk.",
-			link: "read the guide",
-			href: "https://moddingfridays.bleu255.com/Simple_Bytebeat_GB_ROM"
-		},
-		{
-			title: "synths",
-			img: "/images/history/bt110.jpg",
-			alt: "two dod circuits bt-110 synths on a desk",
-			text: "the dod circuits bt-110 is a portable synth built on bytebeat. eurorack modules like maneco labs' grone voice use it as an oscillator too.",
-			link: "read about the bt-110",
-			href: "https://synthanatomy.com/2024/04/dod-circuits-bt-110.html"
 		}
 	];
 </script>
@@ -120,8 +95,12 @@
 	<section class="wrap hero">
 		<h1>bytebeat</h1>
 		<p class="lede">
-			bytebeat is music written as one line of code. ship a track to earn music gear from hack
-			club.
+			bytebeat is music written as one line of code. ship a track to earn music gear from
+			<a href="https://hackclub.com">hack club</a>.
+		</p>
+		<p class="ctas">
+			<a href="/editor" class="btn">open the editor</a>
+			<a href="/guide" class="btn ghost">read the guide</a>
 		</p>
 
 		{#if error}
@@ -136,8 +115,8 @@
 					(it might take a day or two). log out and back in to refresh your status.
 				</p>
 			{/if}
-			<div class="account">
-				{#if data.user.hackatimeLinked}
+			{#if data.user.hackatimeLinked}
+				<div class="account">
 					<span>
 						hackatime linked{#if data.hackatimeHours !== null}: {data.hackatimeHours}h in the last 7
 							days{/if}
@@ -145,35 +124,28 @@
 					<form method="POST" action="/auth/hackatime/disconnect">
 						<button class="link">disconnect</button>
 					</form>
-				{:else}
-					<span>link hackatime so your time counts.</span>
-					<a href="/auth/hackatime" class="btn">connect hackatime</a>
-				{/if}
-			</div>
+				</div>
+			{/if}
 		{:else}
 			<a href="/auth/login" class="btn">log in with hack club</a>
 		{/if}
 	</section>
 
-	<section class="wrap">
-		<h2>try it</h2>
-		<p class="muted">edit the formula and press play. changes apply while it plays.</p>
-		<DemoEditor initial={HERO} />
-		<p class="ctas">
-			<a href="/editor" class="btn">open the full editor</a>
-			<a href="/guide" class="btn ghost">read the guide</a>
-		</p>
-	</section>
-
-	<section class="wrap">
-		<h2>what is bytebeat?</h2>
-		<p>
-			digital audio is a list of numbers that tells the speaker where to move, usually thousands
-			per second. in bytebeat you write a formula that makes that list. the player counts
-			<code>t</code> up from 0, 8,000 times a second, and runs your formula each time. the result is
-			cut down to a number from 0 to 255, and that number is the next sample.
-		</p>
-		<p>it runs in the browser, so there's nothing to install.</p>
+	<section class="wrap intro">
+		<div>
+			<h2>what is bytebeat?</h2>
+			<p>
+				digital audio is a list of numbers that tells the speaker where to move, usually thousands
+				per second. in bytebeat you write a formula that makes that list. the player counts
+				<code>t</code> up from 0, 8,000 times a second, and runs your formula each time. the result
+				is cut down to a number from 0 to 255, and that number is the next sample.
+			</p>
+			<p>it runs in the browser, so there's nothing to install.</p>
+		</div>
+		<div>
+			<h2>here's a demo track!</h2>
+			<DemoEditor initial={HERO} />
+		</div>
 	</section>
 
 	<section class="wrap">
@@ -239,8 +211,29 @@
 				write a track in the <a href="/editor">bytebeat editor</a>. track your time with
 				<a href="https://lapse.hackclub.com">lapse</a>.
 			</li>
-			<li>ship the track to earn prizes. the prize list isn't out yet.</li>
+			<li><a href="/submit">submit</a> your track to get your reward.</li>
 		</ol>
+	</section>
+
+	<section class="wrap">
+		<h2>the reward</h2>
+		<div class="reward">
+			<h3>a byte-sized snack</h3>
+			<p>ship a track and we'll send you a $5 grant to grab a snack on us. a byte to eat!</p>
+		</div>
+		<p>to get it, your track needs to:</p>
+		<ul class="plain">
+			<li>be at least 30 seconds long, with drums, a melody and chords.</li>
+			<li>be your own song, not a copy of the guide's or someone else's.</li>
+			<li>be exported from the editor, so it has its own link.</li>
+			<li>
+				have your time recorded with <a href="https://lapse.hackclub.com">lapse</a>.
+			</li>
+			<li>
+				come from someone verified on
+				<a href="https://auth.hackclub.com" target="_blank" rel="noopener">hack club auth</a>.
+			</li>
+		</ul>
 	</section>
 
 	<section class="wrap">
@@ -296,6 +289,13 @@
 
 	section {
 		padding-top: 3.5rem;
+	}
+
+	.intro {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: 2.5rem;
+		align-items: start;
 	}
 	h2 {
 		font-size: 1rem;
@@ -438,6 +438,21 @@
 		white-space: nowrap;
 	}
 
+	.reward {
+		max-width: 62ch;
+		margin-bottom: 1.5rem;
+		padding: 1rem 1.2rem;
+		border: 2px solid var(--orange);
+		background: var(--navy-2);
+	}
+	.reward h3 {
+		color: var(--orange);
+		font-size: 0.8rem;
+		margin-bottom: 0.6rem;
+	}
+	.reward p {
+		margin: 0;
+	}
 	.plain {
 		padding-left: 1.4rem;
 		max-width: 62ch;

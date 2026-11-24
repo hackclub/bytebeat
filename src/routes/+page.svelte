@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { player } from '#lib/bytebeat.svelte.ts';
 	import DemoEditor from '#lib/components/DemoEditor.svelte';
 	import VolumeNotice from '#lib/components/VolumeNotice.svelte';
 	import SiteHeader from '#lib/components/layout/SiteHeader.svelte';
@@ -11,65 +10,6 @@
 
 	const HERO = 't*(t>>5|t>>8)';
 
-	const steps = [
-		{
-			title: 'sound',
-			code: 't',
-			text: 't counts up to 255, then wraps back to 0. that repeating ramp is a sawtooth wave, which sounds like a low buzz.'
-		},
-		{
-			title: 'pitch',
-			code: 't*4',
-			text: 'multiplying t makes the ramp wrap 4 times as often, so the note is higher.'
-		},
-		{
-			title: 'rhythm',
-			code: 't*4*(t>>11&1)',
-			text: 't>>11&1 switches between 0 and 1 every quarter second. multiplying by 0 mutes the sound, so it turns on and off.'
-		},
-		{
-			title: 'melody',
-			code: 't*[4,5,6,8][t>>12&3]',
-			text: 't>>12&3 steps through 0, 1, 2, 3 (one step about every half second) and picks a multiplier from the list, so the note changes.'
-		},
-		{
-			title: 'chords',
-			code: '((t*4&255)+(t*6&255))/2',
-			text: 'adding two waves plays both notes at the same time. dividing by 2 keeps the result in range.'
-		},
-		{
-			title: 'combine',
-			code: 't*(t>>5|t>>8)',
-			text: 'two slow counters joined with | (bitwise or) change the pitch in a pattern that repeats, which you hear as a melody.'
-		}
-	];
-	const history = [
-		{
-			title: "2011: the first video",
-			img: "/images/history/viznut.jpg",
-			alt: "a bytebeat formula in pixel text from viznut's video",
-			text: "viznut's video that started it, with formulas sent in by other people.",
-			link: "watch on youtube",
-			href: "https://www.youtube.com/watch?v=GtQdIYUtAHg"
-		},
-		{
-			title: "no man's sky",
-			img: "/images/history/nms.jpg",
-			alt: "a player standing next to bytebeat devices on a red planet in no man's sky",
-			text: "hello games added a bytebeat device to the game in its beyond update (2019). players use it to make their own music, or have it generate random presets.",
-			link: "read the update",
-			href: "https://www.nomanssky.com/2019/12/beyond-development-update-5-bytebeat/"
-		},
-		{
-			title: "arduino",
-			img: "/images/history/arduino.jpg",
-			contain: true,
-			alt: "an arduino uno board",
-			text: "in october 2011, people on the arduino forum ported the formulas to arduino boards.",
-			link: "see the thread",
-			href: "https://forum.arduino.cc/t/one-line-algorithmic-music/73409"
-		}
-	];
 </script>
 
 <svelte:head>
@@ -146,66 +86,8 @@
 		</div>
 	</section>
 
-	<section class="wrap">
-		<h2>the basics</h2>
-		<p class="muted">these are each of the steps this guides teaches. press play to see how they sound like.</p>
-		<ol class="steps">
-			{#each steps as step, i (step.title)}
-				<li class:on={player.playing && player.source === step.title}>
-					<div class="step-head">
-						<span class="num">{String(i + 1).padStart(2, '0')}</span>
-						<h3>{step.title}</h3>
-					</div>
-					<code class="formula">{step.code}</code>
-					<p>{step.text}</p>
-					<button class="btn ghost" onclick={() => player.toggle(step.title, step.code)}>
-						{player.playing && player.source === step.title ? '■ stop' : '▶ play'}
-					</button>
-				</li>
-			{/each}
-		</ol>
-	</section>
-
-	<section class="wrap">
-		<h2>where it's been used</h2>
-		<div class="split">
-			<p>
-				bytebeat started in september 2011, when viznut posted a video called "experimental music
-				from very short c programs" and wrote about it on his blog,
-				<a href="http://countercomplex.blogspot.com">countercomplex</a>. people started sharing their
-				own formulas, and the name "bytebeat" came out of that. later that year he wrote
-				<a href="https://arxiv.org/abs/1112.1368">a paper</a> about it.
-			</p>
-			<p>
-				while bytebeat sounds a lot like chiptune (the music from consoles like the nes and game boy),
-				it actually works differently. those consoles have sound chips with a few fixed channels (pulse
-				waves, noise and so on), and the game tells each channel which note to play. bytebeat instead	
-				calculates every sample itself, so one formula is the whole sound.
-			</p>
-		</div>
-		<p>here's some examples of people using bytebeat:</p>
-		<ul class="history">
-			{#each history as item (item.title)}
-				<li>
-					<a href={item.href} class="shot">
-						<img
-							src={item.img}
-							alt={item.alt}
-							class:contain={item.contain}
-							loading="lazy"
-							width="640"
-							height="360"
-						/>
-					</a>
-					<h3>{item.title}</h3>
-					<p>{item.text} <a href={item.href}>{item.link}</a></p>
-				</li>
-			{/each}
-		</ul>
-	</section>
-
-	<section class="wrap">
-		<h2>how it works</h2>
+	<section class="wrap big">
+		<h2>you'll ship:</h2>
 		<ol class="plain">
 			<li>go through the <a href="/guide">guide</a> and make your first song.</li>
 			<li>
@@ -216,25 +98,30 @@
 		</ol>
 	</section>
 
-	<section class="wrap">
-		<h2>the reward</h2>
-		<div class="reward">
-			<h3>a byte-sized snack</h3>
-			<p>ship a track and we'll send you a $5 grant to grab a snack on us. a byte to eat!</p>
+	<section class="wrap big">
+		<h2>we'll ship</h2>
+		<div class="split">
+			<div class="reward">
+				<h3>a byte-sized snack</h3>
+				<p>ship a track and we'll send you a $5 grant to grab a snack on us. a byte to eat!</p>
+			</div>
+			<div class="reqs">
+				<h3>requirements</h3>
+				<ul class="plain">
+					<li>be at least 30 seconds long, with drums, a melody and chords.</li>
+					<li>be your own song, not a copy of the guide's or someone else's.</li>
+					<li>be exported from the editor, so it has its own link.</li>
+					<li>
+						have your time recorded with <a href="https://lapse.hackclub.com">lapse</a>.
+					</li>
+					<li>
+						come from someone verified on
+						<a href="https://auth.hackclub.com" target="_blank" rel="noopener">hack club auth</a>.
+					</li>
+				</ul>
+			</div>
 		</div>
-		<p>to get it, your track needs to:</p>
-		<ul class="plain">
-			<li>be at least 30 seconds long, with drums, a melody and chords.</li>
-			<li>be your own song, not a copy of the guide's or someone else's.</li>
-			<li>be exported from the editor, so it has its own link.</li>
-			<li>
-				have your time recorded with <a href="https://lapse.hackclub.com">lapse</a>.
-			</li>
-			<li>
-				come from someone verified on
-				<a href="https://auth.hackclub.com" target="_blank" rel="noopener">hack club auth</a>.
-			</li>
-		</ul>
+		<p>read more on the <a href="/requirements">requirements page</a>.</p>
 	</section>
 
 	<section class="wrap">
@@ -315,9 +202,6 @@
 	p {
 		max-width: 62ch;
 	}
-	.muted {
-		color: var(--muted);
-	}
 	.ctas {
 		display: flex;
 		gap: 0.8rem;
@@ -337,44 +221,6 @@
 		margin: 1.5rem 0 2rem;
 	}
 
-	.history {
-		list-style: none;
-		padding: 0;
-		margin: 1.5rem 0 0.75rem;
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-		gap: 1rem;
-	}
-	.history li {
-		background: var(--navy-2);
-		border: 2px solid var(--line);
-		display: flex;
-		flex-direction: column;
-	}
-	.shot {
-		display: block;
-		line-height: 0;
-		border-bottom: 2px solid var(--line);
-	}
-	.shot img {
-		width: 100%;
-		height: auto;
-		aspect-ratio: 16 / 9;
-		object-fit: cover;
-		background: #fff;
-	}
-	.shot img.contain {
-		object-fit: contain;
-	}
-	.history h3 {
-		font-size: 0.75rem;
-		color: var(--orange);
-		margin: 1rem 1rem 0;
-	}
-	.history p {
-		margin: 0.6rem 1rem 1rem;
-		font-size: 0.95rem;
-	}
 
 	.notice {
 		border: 2px solid var(--orange);
@@ -390,53 +236,25 @@
 		margin: 0;
 	}
 
-	.steps {
-		list-style: none;
-		padding: 0;
-		margin: 0;
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-		gap: 1rem;
+	/* "you'll ship" and "we'll ship": larger than the other sections */
+	.big h2 {
+		font-size: 1.5rem;
 	}
-	.steps li {
-		background: var(--navy-2);
-		border: 2px solid var(--line);
-		padding: 1.2rem;
-		display: flex;
-		flex-direction: column;
-		gap: 0.8rem;
+	.big h2::before {
+		width: 0.9rem;
+		height: 0.9rem;
 	}
-	.steps li.on {
-		border-color: var(--orange);
+	.big p,
+	.big li {
+		font-size: 1.15rem;
 	}
-	.steps p {
-		margin: 0;
-		flex: 1;
-		font-size: 0.95rem;
+	.big .reward h3,
+	.reqs h3 {
+		font-size: 1rem;
 	}
-	.steps .btn {
-		align-self: flex-start;
-	}
-	.step-head {
-		display: flex;
-		align-items: baseline;
-		gap: 0.8rem;
-	}
-	.num {
-		font-family: var(--pixel);
-		font-size: 0.65rem;
-		color: var(--muted);
-	}
-	h3 {
-		font-size: 0.85rem;
-	}
-	.formula {
-		display: block;
-		background: var(--navy);
-		border: 2px solid var(--line);
-		padding: 0.5rem 0.7rem;
-		overflow-x: auto;
-		white-space: nowrap;
+	.reqs h3 {
+		color: var(--orange);
+		margin-bottom: 0.8rem;
 	}
 
 	.reward {
